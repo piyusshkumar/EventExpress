@@ -10,7 +10,6 @@ const Register = () => {
     const [showOTP, setShowOTP] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-
     const { register, verifyOTP } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -28,7 +27,8 @@ const Register = () => {
                 navigate('/dashboard');
             }
         } catch (err) {
-            setError(err);
+            console.log(err);
+            setError(err.message || String(err));
         } finally {
             setLoading(false);
         }

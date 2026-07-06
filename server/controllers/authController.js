@@ -15,15 +15,16 @@ const generateToken = (id, role) => {
 exports.register = async (req,res) =>{
   try {
     const { name, email, password, role} = req.body;
-    const user = await User.findOne({email});
-    if (user)  return res.status(400).json({error: 'User already exists'});
+    const existinguser = await User.findOne({email});
+    if (existinguser)  return res.status(400).json({error: 'User already exists'});
    
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    user = await User.create({name, email, password: hashedPassword, role:'user',isVerified: false});
+    const user = await User.create({name, email, password: hashedPassword, role:'user',isVerified: false});
 
     const otp = generateOTP();
+    console.log(otp); 
     await OTP.create({email,otp, action:'account_verification'});
     await sendOTPEmail(email,otp,'account_verification');
 

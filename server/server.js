@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
+const dotenv = require('dotenv');
+dotenv.config();
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/event');
 const bookingRoutes = require('./routes/bookings');
@@ -18,12 +19,16 @@ app.use('/api/events', eventRoutes);
 app.use('/api/bookings', bookingRoutes);
 
 //database
-mongoose.connect(process.env.MONGODB_URI, {})
+mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://Warehouse:Database%4045@warehouse.eaiqo.mongodb.net/", {})
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
 
 
-const PORT = process.env.PORT || 3000;
+app.get('/test', (req, res) => {
+    res.send('server is running');
+})
+
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
