@@ -1,6 +1,7 @@
 const express = require('express');
 const Booking = require('../models/Booking');
 const OTP = require('../models/OTP');
+const Event = require('../models/Event');  
 const { sendBookingEmail, sendOTPEmail } = require('../utils/email');
 
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
@@ -8,6 +9,7 @@ const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString()
 exports.sendBookingOTP = async (req, res) => {
     try {
         const otp = generateOTP();
+        console.log(otp);
         await OTP.findOneAndDelete({ email: req.user.email, action: 'event_booking' });
         await OTP.create({ email: req.user.email, otp: otp, action: 'event_booking' });
         await sendOTPEmail(req.user.email, otp, 'event_booking');

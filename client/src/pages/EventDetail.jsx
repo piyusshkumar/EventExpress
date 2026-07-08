@@ -64,6 +64,7 @@ const EventDetail = () => {
     const isSoldOut = event.availableSeats <= 0;
 
     return (
+
         <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden mt-8">
             {event.image ? (
                 <img src={event.image} alt={event.title} className="w-full h-80 object-cover" />
