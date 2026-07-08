@@ -19,13 +19,13 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const { data } = await api.post('/auth/login', () => {
-                setUser(data);
-                localStorage.setItem('userInfo', JSON.stringify(data));
-                localStorage.setItem('token', data.token);
-                return data; 
-            })
-        } catch (error) {
+            const { data } = await api.post('/auth/login', { email, password });
+            setUser(data);
+            localStorage.setItem('userInfo', JSON.stringify(data));
+            localStorage.setItem('token', data.token);
+            return data;
+        }
+         catch (error) {
             if (error.response?.data?.needVerification) throw error.response.data;
             throw error.response?.data || { message: 'Login failed' };
         }

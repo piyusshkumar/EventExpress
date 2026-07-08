@@ -53,7 +53,7 @@ const AdminDashboard = () => {
     const handleDeleteEvent = async (id) => {
         if (window.confirm('Are you sure you want to delete this event?')) {
             try {
-                await api.delete(`/events/${id}`);
+                await api.delete(`/events/${id}`); //passed as a parameter to the function  
                 fetchData();
             } catch (error) {
                 alert('Error deleting event');
